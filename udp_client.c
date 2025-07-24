@@ -34,7 +34,7 @@ int main() {
     server.sin_port = htons(PORT);
     server.sin_addr.s_addr = inet_addr(SERVER_IP);
 
-    printf("Guess a number between 1 and 100:\n");
+    printf("Welcome! You have 5 chances to guess a number between 1 and 100:\n");
 
     while (1) {
         memset(buffer, 0, BUFFER_SIZE);
@@ -49,7 +49,10 @@ int main() {
 
         printf("Server says: %s\n", response);
 
-        if (strcmp(response, "Correct!") == 0) {
+        // ✅ This handles: "Correct! You guessed it right!"
+        if (strncmp(response, "Correct!", 8) == 0 ||
+            strncmp(response, "You ran out", 11) == 0 ||
+            strncmp(response, "Game already", 12) == 0) {
             break;
         }
     }
